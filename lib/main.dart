@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:project1/screens/home_screen.dart';
 import 'package:project1/screens/patrocinadors_screen.dart';
+import 'package:project1/screens/notificacions_screen.dart';
+import 'package:project1/screens/ferte-soci_screen.dart';
+import 'package:project1/screens/resultats_screen.dart';
+import 'package:project1/screens/descomptes-i-serveis_screen.dart';
+import 'package:project1/screens/noticies_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -17,8 +22,12 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
          '/':(context)=>PaginaPpal(),
-         '/paginaPatrocinadors':(context)=>PaginaPatrocinadors(),
-          //more routes
+          '/paginaPatrocinadors':(context)=>PaginaPatrocinadors(),
+          '/paginaNotificacions':(context)=>PaginaNotificacions(),
+          '/paginaFerteSoci':(context)=>PaginaFerteSoci(),
+          '/paginaResultats':(context)=>PaginaResultats(),
+          '/paginaDescomptesIServeis':(context)=>PaginaDescomptesIServeis(),
+          '/paginaNoticies':(context)=>PaginaNoticies(),
         }
     );
   }

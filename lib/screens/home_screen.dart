@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:project1/screens/patrocinadors_screen.dart';
-import 'package:project1/main.dart';
 
 class PaginaPpal extends StatefulWidget {
   @override
@@ -8,8 +6,6 @@ class PaginaPpal extends StatefulWidget {
 }
 
 class _PaginaPpalState extends State<PaginaPpal> {
-
-  int currentPage = 0;
 
   static const midaCaixa = Size(137, 120);
   static const colorPpal = Colors.red;
@@ -63,7 +59,9 @@ class _PaginaPpalState extends State<PaginaPpal> {
                             ),
                           ),
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.pushNamed(context, '/paginaNotificacions');
+                            },
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const <Widget>[
@@ -108,7 +106,9 @@ class _PaginaPpalState extends State<PaginaPpal> {
                             ),
                           ),
                           child: InkWell(
-                          onTap: () {},
+                            onTap: () {
+                              Navigator.pushNamed(context, '/paginaFerteSoci');
+                            },
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const <Widget>[
@@ -149,7 +149,9 @@ class _PaginaPpalState extends State<PaginaPpal> {
                             ),
                           ),
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.pushNamed(context, '/paginaResultats');
+                            },
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const <Widget>[
@@ -173,7 +175,6 @@ class _PaginaPpalState extends State<PaginaPpal> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-
                     SizedBox.fromSize(
                       size: midaCaixa,
                       child: Material(
@@ -235,7 +236,9 @@ class _PaginaPpalState extends State<PaginaPpal> {
                             ),
                           ),
                           child: InkWell(
-                          onTap: () {},
+                            onTap: () {
+                              Navigator.pushNamed(context, '/paginaDescomptesIServeis');
+                            },
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const <Widget>[
@@ -273,7 +276,9 @@ class _PaginaPpalState extends State<PaginaPpal> {
                             ),
                           ),
                           child: InkWell(
-                          onTap: () {},
+                            onTap: () {
+                              Navigator.pushNamed(context, '/paginaNoticies');
+                            },
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const <Widget>[
@@ -309,7 +314,7 @@ class _PaginaPpalState extends State<PaginaPpal> {
               ),
               title: const Text('Notificacions'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.pushNamed(context, '/paginaNotificacions');
               },
             ),
             ListTile(
@@ -320,7 +325,7 @@ class _PaginaPpalState extends State<PaginaPpal> {
               ),
               title: const Text('Fer-te Soci'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.pushNamed(context, '/paginaFerteSoci');
               },
             ),
             ListTile(
@@ -331,7 +336,7 @@ class _PaginaPpalState extends State<PaginaPpal> {
               ),
               title: const Text('Resultats'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.pushNamed(context, '/paginaResultats');
               },
             ),
             ListTile(
@@ -353,7 +358,7 @@ class _PaginaPpalState extends State<PaginaPpal> {
               ),
               title: const Text('Descomptes i Serveis'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.pushNamed(context, '/paginaDecomptesIServeis');
               },
             ),
             ListTile(
@@ -364,7 +369,7 @@ class _PaginaPpalState extends State<PaginaPpal> {
               ),
               title: const Text('Noticies'),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.pushNamed(context, '/paginaNoticies');
               },
             ),
           ],
@@ -394,7 +399,6 @@ class CustomScreen extends StatelessWidget {
               ),
             ),
           ),
-
         Container(
           width: 160.0,
           height: 40.0,
@@ -402,7 +406,7 @@ class CustomScreen extends StatelessWidget {
           color: Colors.white,
           child: FloatingActionButton.extended(
             onPressed: () {
-              //Navigator.pushNamed(context, '/paginaFesteSoci');
+              Navigator.pushNamed(context, '/paginaFerteSoci');
             },
             label: const Text(
                 "FES-TE SOCI!",
