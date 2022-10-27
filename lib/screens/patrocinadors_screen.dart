@@ -33,267 +33,7 @@ class _PaginaPatrocinadorsState extends State<PaginaPatrocinadors> {
       ),
 
       bottomNavigationBar: BottomAppBar(
-        child: SizedBox(
-          height: 240,
-          child: Column(
-            children: <Widget>[
-              Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    SizedBox.fromSize(
-                      size: midaCaixa,
-                      child: Material(
-                        color: colorFonsIcones,
-                        child: DecoratedBox(
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              top: BorderSide(
-                                  width: midaBordesCaixaPuntsFebles,
-                                  color: colorPpal,
-                                  style: BorderStyle.solid),
-                              bottom: BorderSide(
-                                  width: midaBordesCaixa,
-                                  color: colorPpal,
-                                  style: BorderStyle.solid),
-                              right: BorderSide(
-                                  width: midaBordesCaixa,
-                                  color: colorPpal,
-                                  style: BorderStyle.solid),
-                            ),
-                          ),
-                          child: InkWell(
-                            onTap: () {},
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const <Widget>[
-                                Icon(
-                                  Icons.notifications_on,
-                                  size: 40.0,
-                                  color: colorPpal,
-                                ),
-                                Text(
-                                  "Notificacions",
-                                  style: TextStyle(fontSize: 16.0),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox.fromSize(
-                      size: midaCaixa,
-                      child: Material(
-                        color: colorFonsIcones,
-                        child: DecoratedBox(
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              top: BorderSide(
-                                  width: midaBordesCaixaPuntsFebles,
-                                  color: colorPpal,
-                                  style: BorderStyle.solid),
-                              bottom: BorderSide(
-                                  width: midaBordesCaixa,
-                                  color: colorPpal,
-                                  style: BorderStyle.solid),
-                              left: BorderSide(
-                                  width: midaBordesCaixa,
-                                  color: colorPpal,
-                                  style: BorderStyle.solid),
-                              right: BorderSide(
-                                  width: midaBordesCaixa,
-                                  color: colorPpal,
-                                  style: BorderStyle.solid),
-                            ),
-                          ),
-                          child: InkWell(
-                            onTap: () {},
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const <Widget>[
-                                Icon(
-                                  Icons.account_circle,
-                                  size: 40.0,
-                                  color: colorPpal,
-                                ),
-                                Text(
-                                  "Fer-te soci",
-                                  style: TextStyle(fontSize: 16.0),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox.fromSize(
-                      size: midaCaixa,
-                      child: Material(
-                        color: colorFonsIcones,
-                        child: DecoratedBox(
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              top: BorderSide(
-                                  width: midaBordesCaixaPuntsFebles,
-                                  color: colorPpal,
-                                  style: BorderStyle.solid),
-                              bottom: BorderSide(
-                                  width: midaBordesCaixa,
-                                  color: colorPpal,
-                                  style: BorderStyle.solid),
-                              left: BorderSide(
-                                  width: midaBordesCaixa,
-                                  color: colorPpal,
-                                  style: BorderStyle.solid),
-                            ),
-                          ),
-                          child: InkWell(
-                            onTap: () {},
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const <Widget>[
-                                Icon(
-                                  Icons.content_paste_search,
-                                  size: 40.0,
-                                  color: colorPpal,
-                                ),
-                                Text(
-                                  "Resultats",
-                                  style: TextStyle(fontSize: 16.0),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ]),
-              Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
 
-                    SizedBox.fromSize(
-                      size: midaCaixa,
-                      child: Material(
-                        color: colorFonsIcones,
-                        child: DecoratedBox(
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              top: BorderSide(
-                                  width: midaBordesCaixa,
-                                  color: colorPpal,
-                                  style: BorderStyle.solid),
-                              right: BorderSide(
-                                  width: midaBordesCaixa,
-                                  color: colorPpal,
-                                  style: BorderStyle.solid),
-                            ),
-                          ),
-                          child: InkWell(
-                            onTap: () {},
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const <Widget>[
-                                Icon(
-                                  Icons.people,
-                                  size: 40.0,
-                                  color: colorPpal,
-                                ),
-                                Text(
-                                  "Patrocinadors",
-                                  style: TextStyle(fontSize: 16.0),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox.fromSize(
-                      size: midaCaixa,
-                      child: Material(
-                        color: colorFonsIcones,
-                        child: DecoratedBox(
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              top: BorderSide(
-                                  width: midaBordesCaixa,
-                                  color: colorPpal,
-                                  style: BorderStyle.solid),
-                              left: BorderSide(
-                                  width: midaBordesCaixa,
-                                  color: colorPpal,
-                                  style: BorderStyle.solid),
-                              right: BorderSide(
-                                  width: midaBordesCaixa,
-                                  color: colorPpal,
-                                  style: BorderStyle.solid),
-                            ),
-                          ),
-                          child: InkWell(
-                            onTap: () {},
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const <Widget>[
-                                Icon(
-                                  Icons.sports_basketball,
-                                  size: 40.0,
-                                  color: colorPpal,
-                                ),
-                                Text(
-                                  "Descomptes \ni serveis",
-                                  style: TextStyle(fontSize: 16.0),
-                                  textAlign: TextAlign.center,
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox.fromSize(
-                      size: midaCaixa,
-                      child: Material(
-                        color: colorFonsIcones,
-                        child: DecoratedBox(
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              top: BorderSide(
-                                  width: midaBordesCaixa,
-                                  color: colorPpal,
-                                  style: BorderStyle.solid),
-                              left: BorderSide(
-                                  width: midaBordesCaixa,
-                                  color: colorPpal,
-                                  style: BorderStyle.solid),
-                            ),
-                          ),
-                          child: InkWell(
-                            onTap: () {},
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const <Widget>[
-                                Icon(
-                                  Icons.newspaper,
-                                  size: 40.0,
-                                  color: colorPpal,
-                                ),
-                                Text(
-                                  "Noticies",
-                                  style: TextStyle(fontSize: 16.0),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ]),
-            ],
-          ),
-        ),
       ),
 
       drawer: Drawer(
@@ -379,47 +119,40 @@ class CustomScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
       children: <Widget>[
         Container(
-          height: 200.0,
-          width: 400.0,
+          height: 20.0,
+          width: 40.0,
+          margin: const EdgeInsets.only(top: 40.0),
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('lib/image/Caprabo.jpg'),
+              //scale: 1,
+            ),
+          ),
+        ),
+        Container(
+          height: 20.0,
+          width: 40.0,
           margin: const EdgeInsets.only(top: 40.0),
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('lib/image/logocbbalaguer.png'),
-              scale: 0.9,
+              //scale: 1,
             ),
           ),
         ),
-
         Container(
-          width: 160.0,
-          height: 40.0,
-          margin: const EdgeInsets.only(left: 200.0,top: 10.0),
-          color: Colors.white,
-          child: FloatingActionButton.extended(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            label: const Text(
-              "FES-TE SOCI!",
-              style: TextStyle(fontSize: 18,fontWeight: FontWeight.w900),
+          height: 20.0,
+          width: 40.0,
+          margin: const EdgeInsets.only(top: 40.0),
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('lib/image/logocbbalaguer.png'),
+              //scale: 1,
             ),
-            backgroundColor: Colors.red[900],
-
           ),
-        ),
-        Container(
-            margin: const EdgeInsets.only(left: 200.0,top: 5.0),
-            child: Column(
-                children: const [
-                  Text(
-                    "TEMPORADA 2022/2023",
-                    style: TextStyle(fontWeight: FontWeight.w900),
-                  ),
-                ]
-            )
         ),
       ],
     );
