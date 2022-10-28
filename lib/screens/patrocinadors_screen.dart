@@ -290,6 +290,8 @@ class CustomScreen extends StatelessWidget {
                   ),
                 ),
               ]),
-        ]));
+        ]
+        )
+    );
   }
 }
