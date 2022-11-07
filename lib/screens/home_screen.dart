@@ -243,7 +243,7 @@ class _PaginaPpalState extends State<PaginaPpal> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const <Widget>[
                               Icon(
-                                Icons.sports_basketball,
+                                Icons.discount,
                                 size: 40.0,
                                 color: colorPpal,
                               ),
@@ -351,14 +351,14 @@ class _PaginaPpalState extends State<PaginaPpal> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.sports_basketball),
+              leading: const Icon(Icons.discount),
               iconColor: colorPpal,
               shape: const RoundedRectangleBorder(
                 side: BorderSide(color: colorPpal, width: 1),
               ),
               title: const Text('Descomptes i Serveis'),
               onTap: () {
-                Navigator.pushNamed(context, '/paginaDecomptesIServeis');
+                Navigator.pushNamed(context, '/paginaDescomptesIServeis');
               },
             ),
             ListTile(

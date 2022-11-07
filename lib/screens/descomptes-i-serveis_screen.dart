@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PaginaDescomptesIServeis extends StatefulWidget {
@@ -17,7 +18,7 @@ class _PaginaDescomptesIServeisState extends State<PaginaDescomptesIServeis> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: new Icon(Icons.home),
+            icon: const Icon(Icons.home),
             iconSize: 30,
             onPressed: () {
               Navigator.pushNamed(context, '/');
@@ -78,7 +79,7 @@ class _PaginaDescomptesIServeisState extends State<PaginaDescomptesIServeis> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.sports_basketball),
+              leading: const Icon(Icons.discount),
               iconColor: colorPpal,
               shape: const RoundedRectangleBorder(
                 side: BorderSide(color: colorPpal, width: 1),
@@ -100,7 +101,7 @@ class _PaginaDescomptesIServeisState extends State<PaginaDescomptesIServeis> {
               },
             ),
             Container(
-              margin: EdgeInsets.only(top: 270),
+              margin: const EdgeInsets.only(top: 270),
               child: InkWell(
                 onTap: () {
                   Navigator.pushNamed(context, '/');
@@ -128,7 +129,10 @@ class CustomScreen extends StatelessWidget {
   final Color color;
   const CustomScreen({super.key,  required this.color });
 
-  static const marginImatges = 5.0;
+  static const ampleImatge = 180.0;
+  static const alcadaImatge = 100.0;
+  static const ampleText = 220.0;
+  static const alcadaText = 100.0;
 
   @override
   Widget build(BuildContext context) {
@@ -136,135 +140,239 @@ class CustomScreen extends StatelessWidget {
     return Scaffold(
         body: Column(children: <Widget>[
           Row(//ROW 1
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                height: 50.0,
-                width: 200,
-                decoration: const BoxDecoration(
-                  color: Colors.black,
-                  image: DecorationImage(
-                    image: AssetImage('lib/image/logoCompsa.png'),
+              SizedBox(
+                height: 100,
+                width: 400,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                          width: 1.0,
+                          color: Colors.red.shade900,
+                          style: BorderStyle.solid
+                      ),
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                        Padding(
+                          padding: EdgeInsets.only(top: 10.0, left: 2.0, right: 2.0),
+                          child: Text.rich(
+                              TextSpan(
+                                text: 'Els ',
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                ),
+                                children: <TextSpan>[
+
+                                  TextSpan(
+                                      text: 'socis ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                      )
+                                  ),
+                                  TextSpan(
+                                      text: 'del Club Bàsquet Balaguer tenen ',
+                                  ),
+                                  TextSpan(
+                                      text: 'dret a gaudir de descomptes en serveis i productes ',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                      )
+                                  ),
+                                  TextSpan(
+                                    text: 'de les marques que enguany patrocinen els diferents '
+                                        'equips del club'
+                                  ),
+                                  // can add more TextSpans here...
+                                ],
+                              ),
+                            )
+                      ),
+                    ],
                   ),
                 ),
               ),
+            ],
+          ),
+          Row(//ROW 2
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
               Container(
-                height: 110.0,
-                width: 200.0,
+                height: 40,
+                width: ampleImatge,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('lib/image/logoCompsaFons.png'),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: alcadaText,
+                width: ampleText,
                 child: Column(
-                  children: const [
-                    Text(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
                         "www.compsaonline.com",
                         style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    Text(
+                    const Text(
                         "Condicions especials per als socis (i familiars directes dels socis) del Club Bàsquet Balaguer",
                         textAlign: TextAlign.center,
                     ),
                     Text(
                         "DESCOMPTE DEL 5%",
-                        style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                        style: TextStyle(color: Colors.red[800], fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
               ),
             ],
           ),
-          Row(//ROW 2
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 110.0,
-                  width: 180,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('lib/image/diputacio_lleida.jpg'),
-                      //scale: 1,
-                    ),
+          Row(//ROW 3
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                height: alcadaImatge,
+                width: ampleImatge,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('lib/image/Caprabo.jpg'),
                   ),
                 ),
-                Container(
-                  height: 110.0,
-                  width: 160,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('lib/image/logofarre.gif'),
-                      //scale: 1,
+              ),
+              SizedBox(
+                height: alcadaText,
+                width: ampleText,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "www.caprabo.com",
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
+                    const Text(
+                      "Condicions especials per als socis (i familiars directes dels socis) del Club Bàsquet Balaguer",
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      "DESCOMPTE DEL 5%",
+                      style: TextStyle(color: Colors.red[800], fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Row(//ROW 4
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                height: alcadaImatge,
+                width: ampleImatge,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('lib/image/logofarre.gif'),
                   ),
                 ),
-              ]),
-          Row(// ROW 3
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 110.0,
-                  width: 170,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('lib/image/logodissenyviatges.png'),
-                      //scale: 1,
+              ),
+              SizedBox(
+                height: alcadaText,
+                width: ampleText,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "www.gammafarre.com",
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
+                    const Text(
+                      "Condicions especials per als socis (i familiars directes dels socis) del Club Bàsquet Balaguer",
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      "DESCOMPTE DEL 10%",
+                      style: TextStyle(color: Colors.red[800], fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Row(//ROW 5
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                height: alcadaImatge,
+                width: ampleImatge,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('lib/image/logomena.gif'),
                   ),
                 ),
-                Container(
-                  height: 110.0,
-                  width: 120.0,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('lib/image/logo.jpg'),
-                      //scale: 1,
+              ),
+              SizedBox(
+                height: alcadaText,
+                width: ampleText,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "www.comercialmena.com",
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
+                    const Text(
+                      "Condicions especials per als socis (i familiars directes dels socis) del Club Bàsquet Balaguer",
+                      textAlign: TextAlign.center,
+                    ),
+                    Text(
+                      "DESCOMPTE DEL 8%",
+                      style: TextStyle(color: Colors.red[800], fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          Row(//ROW 6
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                height: alcadaImatge,
+                width: ampleImatge,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('lib/image/logodissenyviatges.png'),
                   ),
                 ),
-              ]),
-          Row(// ROW 4
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 110.0,
-                  width: 190,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('lib/image/fcbq.jpg'),
-                      //scale: 1,
+              ),
+              SizedBox(
+                height: alcadaText,
+                width: ampleText,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "www.dissenyviatges.com",
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                  ),
-                ),
-                Container(
-                  height: 110.0,
-                  width: 160,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('lib/image/esportcat.png'),
-                      //scale: 1,
+                    const Text(
+                      "Condicions especials per als socis (i familiars directes dels socis) del Club Bàsquet Balaguer",
+                      textAlign: TextAlign.center,
                     ),
-                  ),
-                ),
-              ]),
-          Row(// ROW 5
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 140,
-                  width: 140,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('lib/image/consell_comarcal.jpg'),
-                      //scale: 1,
+                    Text(
+                      "DESCOMPTE DEL 5%",
+                      style: TextStyle(color: Colors.red[800], fontWeight: FontWeight.bold),
                     ),
-                  ),
+                  ],
                 ),
-                Container(
-                  height: 110.0,
-                  width: 120,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('lib/image/logomena.gif'),
-                      //scale: 1,
-                    ),
-                  ),
-                ),
-              ]),
+              ),
+            ],
+          ),
         ]
         )
     );

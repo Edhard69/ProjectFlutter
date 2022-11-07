@@ -78,7 +78,7 @@ class _PaginaNoticiesState extends State<PaginaNoticies> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.sports_basketball),
+              leading: const Icon(Icons.discount),
               iconColor: colorPpal,
               shape: const RoundedRectangleBorder(
                 side: BorderSide(color: colorPpal, width: 1),
