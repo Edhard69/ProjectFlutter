@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project1/screens/carnet-soci-screen.dart';
 
 class PaginaFerteSoci extends StatefulWidget {
   @override
@@ -126,6 +127,12 @@ class _FormSave extends StatelessWidget {
   static const midaIcona = 40.0;
   static const colorIcona = Colors.red;
   static const espais = SizedBox(height: 20);
+  final nomController = TextEditingController();
+  final cognomsController = TextEditingController();
+  final telefonController = TextEditingController();
+  final correuController = TextEditingController();
+  final ibanController = TextEditingController();
+
   @override
   Widget build(BuildContext context){
     return Form(
@@ -146,12 +153,13 @@ class _FormSave extends StatelessWidget {
             TextFormField(
               //maxLength: 0,
               //maxLines: 0,
-              validator: (nom) {
+              controller: nomController,
+              validator: (value) {
                 String pattern = r'(^[a-zA-Z ]*$)';
                 RegExp regExp = RegExp(pattern);
-                if (nom!.isEmpty) {
+                if (value!.isEmpty) {
                   return "Omplenar";
-                }else if(!regExp.hasMatch(nom)){
+                }else if(!regExp.hasMatch(value)){
                   return "El nom ha de ser a-z y A-Z";
                 }
                 return null;
@@ -164,6 +172,7 @@ class _FormSave extends StatelessWidget {
             ),
             espais,
             TextFormField(
+              controller: cognomsController,
               validator: (cognoms) {
                 String pattern = r'(^[a-zA-Z ]*$)';
                 RegExp regExp = RegExp(pattern);
@@ -182,6 +191,7 @@ class _FormSave extends StatelessWidget {
             ),
             espais,
             TextFormField(
+              controller: telefonController,
               validator: (telefon) {
                 String pattern = r'(^[0-9]*$)';
                 RegExp regExp = RegExp(pattern);
@@ -202,6 +212,7 @@ class _FormSave extends StatelessWidget {
             ),
             espais,
             TextFormField(
+              controller: correuController,
               validator: (correu) {
                 String pattern =
                     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
@@ -224,15 +235,17 @@ class _FormSave extends StatelessWidget {
             ),
             espais,
             TextFormField(
+              controller: ibanController,
               validator: (iban) {
                 String pattern =
                 'ES[a-zA-Z0-9]{2}\s?([0-9]{4}\s?){5}\s?';
                 RegExp regExp = RegExp(pattern);
                 if (iban!.isEmpty) {
                   return "Omplenar";
-                }else if(!regExp.hasMatch(iban) || iban.length != 24){
-                  return "Iban incorrecte";
                 }
+                /*else if(!regExp.hasMatch(iban) || iban.length != 24){
+                  return "Iban incorrecte";
+                }*/
                 return null;
               },
               decoration: const InputDecoration(
@@ -247,45 +260,67 @@ class _FormSave extends StatelessWidget {
                 onPressed: (){
                   if(_formKey.currentState!.validate()){
                     print("Guardar");
+                    print(nomController.text);
+                    print(cognomsController.text);
+                    print(telefonController.text);
+                    print(correuController.text);
+                    print(ibanController.text);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                          CarnetSociScreen(
+                              nomController.text,
+                              cognomsController.text,
+                              correuController.text
+                          )
+                      ),
+                    );
                   }
+
                 },
-            ),
-            espais,
+            ),/*
             Container(
               width: 380.0,
               height: 200.0,
               decoration: BoxDecoration(
                     border: Border.all(color: Colors.red.shade900, width: 2),
                     borderRadius: BorderRadius.circular(10.0),
-                ),
-
-              child: Row(
+              ),
+              child: Column(
                   children: <Widget>[
-                    Container(
-                      width: 350.0,
-                      height: 60.0,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('lib/image/logocbbalaguer.png'),
-                          //scale: 1,
+                    Row(
+                      children: <Widget>[
+                        Container(
+                          width: 350.0,
+                          height: 80.0,
+                          margin: const EdgeInsets.only(left: 10.0,top: 10.0),
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage('lib/image/logocbbalaguer.png'),
+                              scale: 2.4,
+                              alignment: Alignment.topLeft
+                            ),
+                          ),
                         ),
-                      ),
+                      ]
                     ),
-                    Container(
+                    SizedBox(
                       width: 350.0,
                       height: 60.0,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('lib/image/logocbbalaguer.png'),
-                          //scale: 1,
-                        ),
+                      child: Text(
+                        "Nom: ",
                       ),
                     ),
                   ]
-              )
-            ),
+              ),
+            ),*/
             espais,
-
+            espais,
+            espais,
+            espais,
+            espais,
+            espais,
           ],
         ),
       ),
