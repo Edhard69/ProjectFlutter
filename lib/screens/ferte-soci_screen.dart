@@ -279,48 +279,7 @@ class _FormSave extends StatelessWidget {
                   }
 
                 },
-            ),/*
-            Container(
-              width: 380.0,
-              height: 200.0,
-              decoration: BoxDecoration(
-                    border: Border.all(color: Colors.red.shade900, width: 2),
-                    borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Column(
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Container(
-                          width: 350.0,
-                          height: 80.0,
-                          margin: const EdgeInsets.only(left: 10.0,top: 10.0),
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('lib/image/logocbbalaguer.png'),
-                              scale: 2.4,
-                              alignment: Alignment.topLeft
-                            ),
-                          ),
-                        ),
-                      ]
-                    ),
-                    SizedBox(
-                      width: 350.0,
-                      height: 60.0,
-                      child: Text(
-                        "Nom: ",
-                      ),
-                    ),
-                  ]
-              ),
-            ),*/
-            espais,
-            espais,
-            espais,
-            espais,
-            espais,
-            espais,
+            ),
           ],
         ),
       ),

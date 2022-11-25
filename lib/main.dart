@@ -6,7 +6,6 @@ import 'package:project1/screens/ferte-soci_screen.dart';
 import 'package:project1/screens/resultats_screen.dart';
 import 'package:project1/screens/descomptes-i-serveis_screen.dart';
 import 'package:project1/screens/noticies_screen.dart';
-import 'package:project1/screens/carnet-soci-screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -29,7 +28,6 @@ class MyApp extends StatelessWidget {
           '/paginaResultats':(context)=>PaginaResultats(),
           '/paginaDescomptesIServeis':(context)=>PaginaDescomptesIServeis(),
           '/paginaNoticies':(context)=>PaginaNoticies(),
-          //'/paginaCarnetSoci':(context)=>PaginaCarnetSoci(),
         }
     );
   }

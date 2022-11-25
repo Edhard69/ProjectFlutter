@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class PaginaPatrocinadors extends StatefulWidget {
   @override
@@ -27,7 +29,7 @@ class _PaginaPatrocinadorsState extends State<PaginaPatrocinadors> {
       ),
       body: PageView(
         children: const [
-          CustomScreen( color: Colors.white ),
+          CustomScreen(),
         ],
       ),
       drawer: Drawer(
@@ -127,171 +129,14 @@ class _PaginaPatrocinadorsState extends State<PaginaPatrocinadors> {
 
 
 class CustomScreen extends StatelessWidget {
-
-  static const marginImatges = 5.0;
-
-  final Color color;
-  const CustomScreen({super.key,  required this.color });
+  const CustomScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Column(children: <Widget>[
-          Row(//ROW 1
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                height: 110.0,
-                width: 150,
-                margin: const EdgeInsets.only(top: marginImatges),
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('lib/image/iltridaweb.gif'),
-                  ),
-                ),
-              ),
-              Container(
-                height: 110.0,
-                width: 120.0,
-                margin: const EdgeInsets.only(top: marginImatges),
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('lib/image/esports_balaguer.png'),
-                    //scale: 1,
-                  ),
-                ),
-              ),
-              Container(
-                height: 110.0,
-                width: 140,
-                margin: const EdgeInsets.only(top: marginImatges),
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('lib/image/logocudosconsultors.png'),
-                    //scale: 1,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Row(//ROW 2
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 110.0,
-                  width: 180,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('lib/image/diputacio_lleida.jpg'),
-                      //scale: 1,
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 110.0,
-                  width: 160,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('lib/image/logofarre.gif'),
-                      //scale: 1,
-                    ),
-                  ),
-                ),
-              ]),
-          Row(// ROW 3
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 110.0,
-                  width: 170,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('lib/image/logodissenyviatges.png'),
-                      //scale: 1,
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 110.0,
-                  width: 120.0,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('lib/image/logo.jpg'),
-                      //scale: 1,
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 110.0,
-                  width: 120.0,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('lib/image/Caprabo.jpg'),
-                      //scale: 1,
-                    ),
-                  ),
-                ),
-              ]),
-          Row(// ROW 4
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 110.0,
-                  width: 190,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('lib/image/fcbq.jpg'),
-                      //scale: 1,
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 110.0,
-                  width: 160,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('lib/image/esportcat.png'),
-                      //scale: 1,
-                    ),
-                  ),
-                ),
-              ]),
-          Row(// ROW 5
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 140,
-                  width: 140,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('lib/image/consell_comarcal.jpg'),
-                      //scale: 1,
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 110.0,
-                  width: 120,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('lib/image/logomena.gif'),
-                      //scale: 1,
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 140,
-                  width: 150,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('lib/image/logo_ajuntament_balaguer.jpg'),
-                      //scale: 1,
-                    ),
-                  ),
-                ),
-              ]),
-        ]
-        )
+    return const Scaffold(
+        body: WebView(
+          initialUrl: 'https://cbbalaguer.cat/patrocinadors/',
+        ),
     );
   }
 }
