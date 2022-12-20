@@ -1,37 +1,25 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:mailer/mailer.dart';
-import 'package:mailer/smtp_server.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:http/http.dart' as http;
 import 'package:project1/screens/carnet-soci-screen.dart';
-import 'package:flutter_wordpress/flutter_wordpress.dart' as wp;
+import 'package:shared_preferences/shared_preferences.dart';
 
-int i=0;
-wp.WordPress wordPress = wp.WordPress(
-  baseUrl: 'https://cbbalaguer.cat/',
-  authenticator: wp.WordPressAuthenticator.JWT,
-  adminName: '',
-  adminKey: '',
-);
-class PaginaFerteSoci extends StatefulWidget {
+class PaginaLogin extends StatefulWidget {
   @override
-  _PaginaFerteSociState createState() => _PaginaFerteSociState();
+  _PaginaLoginState createState() => _PaginaLoginState();
 }
-class _PaginaFerteSociState extends State<PaginaFerteSoci> {
+class _PaginaLoginState extends State<PaginaLogin> {
   GlobalKey<FormState> keyForm = GlobalKey();
-  final nomController = TextEditingController();
-  final cognomsController = TextEditingController();
-  final telefonController = TextEditingController();
   final correuController = TextEditingController();
-  final quantitatController = TextEditingController();
-  final ibanController = TextEditingController();
-
-
+  final contrasenyaController = TextEditingController();
   static const colorPpal = Colors.red;
-  bool carnet = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Fer-te Soci"),
+        title: const Text("Login"),
         centerTitle: true,
         actions: [
           IconButton(
@@ -172,20 +160,17 @@ class _PaginaFerteSociState extends State<PaginaFerteSoci> {
       child: Card(child: ListTile(title: item)),
     );
   }
-  String money = 'hombre';
   static const midaIcona = 40.0;
   static const colorIcona = Colors.red;
   static const espais = SizedBox(height: 20);
-  bool caixaText = false;
-  bool focusBool = true;
-  int preu = 0;
+  bool _visibilitat = false;
   Widget formUI() {
     return Column(
       children: <Widget>[
         const Padding(
           padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
           child: Text(
-            "Registra't!",
+            "Loguejat!",
             style: TextStyle(
               fontSize: 20.0,
               fontWeight: FontWeight.w600,
@@ -193,85 +178,12 @@ class _PaginaFerteSociState extends State<PaginaFerteSoci> {
           ),
         ),
         Padding(
-        padding: const EdgeInsets.only(left: 10.0, right: 20.0),
-        child: TextFormField(
-            controller: nomController,
-            validator: (value) {
-              String pattern = r'(^[a-zA-Z ]*$)';
-              RegExp regExp = RegExp(pattern);
-              if (value!.isEmpty) {
-                return "Omplenar";
-              }else if(!regExp.hasMatch(value)){
-                return "El nom ha de ser a-z y A-Z";
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-                icon: Icon(Icons.person, color: colorIcona, size: midaIcona),
-                labelText: "Nom",
-                border: OutlineInputBorder()
-            ),
-          ),
-        ),
-        espais,
-        Padding(
-        padding: const EdgeInsets.only(left: 10.0, right: 20.0),
-        child: TextFormField(
-            controller: cognomsController,
-            validator: (cognoms) {
-              String pattern = r'(^[a-zA-Z ]*$)';
-              RegExp regExp = RegExp(pattern);
-              if (cognoms!.isEmpty) {
-                return "Omplenar";
-              }else if(!regExp.hasMatch(cognoms)){
-                return "Els cognoms han de ser a-z y A-Z";
-              }
-              return null;
-            },
-            decoration: const InputDecoration(
-                icon: Icon(Icons.abc_sharp, color: colorIcona, size: midaIcona),
-                labelText: "Cognoms",
-                border: OutlineInputBorder()
-            ),
-          ),
-        ),
-        espais,
-        Padding(
-        padding: const EdgeInsets.only(left: 10.0, right: 20.0),
-            child: TextFormField(
-              controller: telefonController,
-              validator: (telefon) {
-                String pattern = r'(^[0-9]*$)';
-                RegExp regExp = RegExp(pattern);
-                if (telefon!.isEmpty) {
-                  return "Omplenar";
-                }else if (!regExp.hasMatch(telefon)) {
-                  return "Ha de ser un numero de telefon 0-9";
-                }else if (telefon.length != 9) {
-                  return "El numero ha de tenir 9 digits";
-                }
-                return null;
-              },
-              decoration: const InputDecoration(
-                  icon: Icon(Icons.phone, color: colorIcona, size: midaIcona),
-                  labelText: "Telèfon",
-                  border: OutlineInputBorder()
-              ),
-            ),
-        ),
-        espais,
-        Padding(
           padding: const EdgeInsets.only(left: 10.0, right: 20.0),
           child: TextFormField(
             controller: correuController,
             validator: (correu) {
-              String pattern =
-                  r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-              RegExp regExp = RegExp(pattern);
               if (correu!.isEmpty) {
                 return "Omplenar";
-              }else if(!regExp.hasMatch(correu)){
-                return "Correu incorrecte";
               }
               return null;
             },
@@ -283,190 +195,75 @@ class _PaginaFerteSociState extends State<PaginaFerteSoci> {
           ),
         ),
         espais,
-        Align(
-          alignment: Alignment.centerLeft,
-          child: TextButton.icon(
-              onPressed: null,
-              icon: const Icon(Icons.monetization_on_outlined, color: colorIcona, size: 30.0),
-              label: const Text("Quina quantitat vols donar com a soci?",
-                style: TextStyle(
-                  fontSize: 16.0,
-                  color: Colors.black87,
-                ),
-              )
-          ),
-        ),
-        Column(
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Expanded(
-                flex: 10,
-                  child: RadioListTile<String>(
-                    title: const Text('20 €'),
-                    value: '20',
-                    groupValue: money,
-                    onChanged: (value) {
-                      setState(() {
-                        money = value!;
-                        quantitatController.text = "€";
-                        focusBool = true;
-                        caixaText = false;
-                      });
-                    },
-                  ),
-                ),
-              ]
-            ),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  flex: 10,
-                  child: RadioListTile<String>(
-                    title: const Text('50 €'),
-                    value: '50',
-                    groupValue: money,
-                    onChanged: (value) {
-                      setState(() {
-                        money = value!;
-                        quantitatController.text = "€";
-                        focusBool = true;
-                        caixaText = false;
-                      });
-                    },
-                  ),
-                ),
-              ]
-            ),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  flex: 10,
-                  child: RadioListTile<String>(
-                    title: const Text('100 €'),
-                    value: '100',
-                    groupValue: money,
-                    onChanged: (value) {
-                      setState(() {
-                        money = value!;
-                        quantitatController.text = "€";
-                        focusBool = true;
-                        caixaText = false;
-                      });
-                    },
-                  ),
-                ),
-              ]
-            ),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  flex: 5,
-                    child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          SizedBox.fromSize(
-                            size: const Size(190, 80),
-                            child: RadioListTile<String>(
-                              title: const Text('Altra quantitat'),
-                              value: '5',
-                              groupValue: money,
-                              onChanged: (value) {
-                                setState(() {
-                                  money = value!;
-                                  quantitatController.text = value;
-                                  focusBool = false;
-                                  caixaText = true;
-                                });
-                              },
-                            ),
-                          ),
-                          Expanded(
-                            flex: 5,
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 10.0, right: 80.0),
-                              child: TextFormField(
-                                enableInteractiveSelection: caixaText,
-                                focusNode: focusBool? AlwaysDisabledFocusNode() : null,
-                                controller: quantitatController,
-                                validator: (valor) {
-                                  if(quantitatController.text=="€"){
-                                    preu = int.parse(money);
-                                  }else{
-                                    try{
-                                      preu = int.parse(quantitatController.text);
-                                    }catch (e){
-                                      return "Error";
-                                    }
-                                  }
-                                  return null;
-                                },
-                                decoration: const InputDecoration(
-                                    labelText: "€",
-                                    contentPadding:
-                                    EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                                    border: OutlineInputBorder()
-                                ),
-                              ),
-                            ),
-                          ),
-                        ]
-                    ),
-                  ),
-              ]
-            ),
-          ]
-        ),
-        espais,
         Padding(
           padding: const EdgeInsets.only(left: 10.0, right: 20.0),
           child: TextFormField(
-            controller: ibanController,
-            validator: (iban) {
-              String pattern =
-                  'ES[a-zA-Z0-9]{2}\s?([0-9]{4}\s?){5}\s?';
-              RegExp regExp = RegExp(pattern);
-              if (iban!.isEmpty) {
+            obscureText: !_visibilitat,
+            controller: contrasenyaController,
+            validator: (contrasenya) {
+              if (contrasenya!.isEmpty) {
                 return "Omplenar";
-              }
-              else if(!regExp.hasMatch(iban) || iban.length != 24){
-                return "Iban incorrecte";
               }
               return null;
             },
-            decoration: const InputDecoration(
-                icon: Icon(Icons.credit_card, color: colorIcona, size: midaIcona),
-                labelText: "IBAN",
+            decoration: InputDecoration(
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _visibilitat
+                        ? Icons.visibility
+                        : Icons.visibility_off,
+                    color: colorPpal,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _visibilitat = !_visibilitat;
+                    });
+                  },
+                ),
+                icon: const Icon(Icons.lock, color: colorIcona, size: midaIcona),
+                labelText: "Contrasenya",
                 border: OutlineInputBorder()
             ),
           ),
         ),
         espais,
         ElevatedButton(
-          child: const Text("Registrar-se"),
-          onPressed: (){
+          child: const Text("Login"),
+          onPressed: () async {
+            var prefs = await SharedPreferences.getInstance();
             if(keyForm.currentState!.validate()){
-              enviarEmail(correuController.text);
               print("Guardar");
-              print(nomController.text);
-              print(cognomsController.text);
-              print(telefonController.text);
               print(correuController.text);
-              print(preu);
-              print(ibanController.text);
-              i++;
-
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        CarnetSociScreen(
-                            nomController.text,
-                            cognomsController.text,
-                            correuController.text,
-                            i
-                        )
-                ),
+              print(contrasenyaController.text);
+              String msg;
+              login(correuController.text, contrasenyaController.text).then(
+                  (value) => {
+                    if(prefs.getInt("idUser")!=null){
+                      consulta(value).then(
+                              (value2) => {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      CarnetSociScreen(
+                                          value2["nom"],
+                                          value2["cognom"],
+                                          value2["correu"],
+                                          value2["id"]
+                                      )
+                              ),
+                            ),
+                          }
+                      ),
+                    }else{
+                      print("error"),
+                      msg = value.toString(),
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) => _buildPopupDialog(context,msg),
+                      ),
+                    }
+                  }
               );
             }
           },
@@ -476,73 +273,67 @@ class _PaginaFerteSociState extends State<PaginaFerteSoci> {
     );
   }
 }
+
+Widget _buildPopupDialog(BuildContext context,msg) {
+  return AlertDialog(
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Html(
+          data: msg
+        ),
+      ],
+    ),
+    actions: <Widget>[
+      ElevatedButton(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        child: const Text('Tancar'),
+      ),
+    ],
+  );
+}
+
+
+
 class AlwaysDisabledFocusNode extends FocusNode {
   @override
   bool get hasFocus => false;
 }
 
-Future<String> enviarEmail(String email) async {
-  final smtpServer = SmtpServer(
-    "mail.compsaonline.com",
-    port: 465,
-    ssl: true,
-    ignoreBadCertificate: false,
-    allowInsecure: false,
-    username: "web2@compsaonline.com",
-    password: "otZdkeENM975",
-  );
-  // Create our message.
-  final message = Message()
-    ..from = const Address("web2@compsaonline.com", "web2@compsaonline.com")
-    ..recipients.add('eaguila@almata.cat')
-    ..subject = 'Nou registre'
-    ..text = "Gracies per registrarte";
-  try {
-    final sendReport = await send(message, smtpServer);
-    return "Ben aviat contactarem amb tu!";
-    //print('Message sent: ' + sendReport.toString());
-  } on MailerException catch (e) {
-    print(e.message);
-    for (var p in e.problems) {
-      print('Problem: ${p.code}: ${p.msg}');
+Future<dynamic> login(String emailUser, String passwordUser) async {
+  String username = 'app';
+  String password = 'pdB9z)fD!KL&5Xzs*@AX3!rE';
+  String basicAuth = 'Basic ${base64.encode(utf8.encode('$username:$password'))}';
+  var url ='http://cbbalaguer.cat/wp-json/wp/v2/users/login';
+  const JsonCodec json = JsonCodec();
+  var body2;
+  var body = jsonEncode({"email": emailUser,"password": passwordUser});
+      final response = await http.Client().post(Uri.parse(url),
+          headers: {"Accept": "application/json", "authorization": basicAuth, "Content-Type": "application/json"},
+      body: body).then((http.Response response) async {
+    body2 = json.decode(response.body.toString());
+    final prefs = await SharedPreferences.getInstance();
+    if(body2["code"]==200 || body2["code"]=="200"){
+      prefs.setInt('idUser',body2["message"]);
     }
-    return "Hi ha hagut un error al enviar el correu, torna-ho a intentar";
-  }
+  });
+  return body2["message"];
 }
 
-
-
-
-/*
-void createPost(wp.User user) {
-  final post = wordPress.createPost(
-    post: new wp.Post(
-      title: 'First post as a Chief Editor',
-      content: 'Blah! blah! blah!',
-      excerpt: 'Discussion about blah!',
-      authorID: user.id,
-      commentStatus: wp.PostCommentStatus.open,
-      pingStatus: wp.PostPingStatus.closed,
-      status: wp.PostPageStatus.publish,
-      format: wp.PostFormat.standard,
-      sticky: true,
-    ),
-  );
-
-  post.then((p) {
-    print('Post created successfully with ID: ${p.id}');
-  }).catchError((err) {
-    print('Failed to create post: $err');
+Future<dynamic> consulta(int idUser) async {
+  String username = 'app';
+  String password = 'pdB9z)fD!KL&5Xzs*@AX3!rE';
+  String basicAuth = 'Basic ${base64.encode(utf8.encode('$username:$password'))}';
+  var url ='http://cbbalaguer.cat/wp-json/wp/v2/users/$idUser';
+  const JsonCodec json = JsonCodec();
+  var body2;
+  final response = await http.Client().get(Uri.parse(url),
+      headers: {"Accept": "application/json", "authorization": basicAuth}
+  ).then((http.Response response) {
+    body2 = json.decode(response.body.toString());
   });
+  return body2;
 }
-  Future<wp.User> response = wordPress.authenticateUser(
-    username: 'cbbalaguer',
-    password: '#SomCBB2019!',
-  );
-
-  response.then((user) {
-    createPost(user);
-  }).catchError((err) {
-    print('Failed to fetch user: $err');
-  });
-*/
