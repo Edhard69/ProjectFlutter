@@ -71,8 +71,32 @@ class _PaginaLoginState extends State<PaginaLogin> {
                 ),
               ),
               title: const Text('Fer-te Soci'),
-              onTap: () {
-                Navigator.pushNamed(context, '/paginaFerteSoci');
+              onTap: () async {
+                takeId().then(
+                        (value) => {
+                      if(value == null){
+                        Navigator.pushNamed(context, '/paginaFerteSoci')
+                      }else{
+                        consulta(value).then(
+                                (value2) => {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        CarnetSociScreen(
+                                            value2["nom"],
+                                            value2["cognom"],
+                                            value2["correu"],
+                                            value2["id"]
+                                        )
+                                ),
+                              ),
+                            }
+                        ),
+                      }
+                    }
+
+                );
               },
             ),
             ListTile(
@@ -232,9 +256,6 @@ class _PaginaLoginState extends State<PaginaLogin> {
           onPressed: () async {
             var prefs = await SharedPreferences.getInstance();
             if(keyForm.currentState!.validate()){
-              print("Guardar");
-              print(correuController.text);
-              print(contrasenyaController.text);
               String msg;
               login(correuController.text, contrasenyaController.text).then(
                   (value) => {
@@ -256,7 +277,6 @@ class _PaginaLoginState extends State<PaginaLogin> {
                           }
                       ),
                     }else{
-                      print("error"),
                       msg = value.toString(),
                       showDialog(
                         context: context,
@@ -296,8 +316,6 @@ Widget _buildPopupDialog(BuildContext context,msg) {
   );
 }
 
-
-
 class AlwaysDisabledFocusNode extends FocusNode {
   @override
   bool get hasFocus => false;
@@ -321,6 +339,12 @@ Future<dynamic> login(String emailUser, String passwordUser) async {
     }
   });
   return body2["message"];
+}
+
+Future<int?> takeId() async {
+  final prefs = await SharedPreferences.getInstance();
+  final int? idUser = prefs.getInt('idUser');
+  return idUser;
 }
 
 Future<dynamic> consulta(int idUser) async {

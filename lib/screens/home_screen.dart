@@ -121,7 +121,6 @@ class _PaginaPpalState extends State<PaginaPpal> {
                                           }else{
                                             consulta(value).then(
                                               (value2) => {
-                                                print(value2),
                                                 Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
@@ -371,8 +370,32 @@ class _PaginaPpalState extends State<PaginaPpal> {
                 side: BorderSide(color: colorPpal, width: 1),
               ),
               title: const Text('Fer-te Soci'),
-              onTap: () {
-                Navigator.pushNamed(context, '/paginaFerteSoci');
+              onTap: () async {
+                takeId().then(
+                        (value) => {
+                      if(value == null){
+                        Navigator.pushNamed(context, '/paginaFerteSoci')
+                      }else{
+                        consulta(value).then(
+                                (value2) => {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        CarnetSociScreen(
+                                            value2["nom"],
+                                            value2["cognom"],
+                                            value2["correu"],
+                                            value2["id"]
+                                        )
+                                ),
+                              ),
+                            }
+                        ),
+                      }
+                    }
+
+                );
               },
             ),
             ListTile(
@@ -455,8 +478,32 @@ class CustomScreen extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 padding: const EdgeInsets.only(right: 30.0),
                 child: FloatingActionButton.extended(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/paginaFerteSoci');
+                  onPressed: () async {
+                    takeId().then(
+                            (value) => {
+                          if(value == null){
+                            Navigator.pushNamed(context, '/paginaFerteSoci')
+                          }else{
+                            consulta(value).then(
+                                    (value2) => {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            CarnetSociScreen(
+                                                value2["nom"],
+                                                value2["cognom"],
+                                                value2["correu"],
+                                                value2["id"]
+                                            )
+                                    ),
+                                  ),
+                                }
+                            ),
+                          }
+                        }
+
+                    );
                   },
                   label: const Text(
                     "FES-TE SOCI!",
@@ -498,19 +545,14 @@ Future<int?> takeId() async {
 Future<dynamic> consulta(int idUser) async {
   String username = 'app';
   String password = 'pdB9z)fD!KL&5Xzs*@AX3!rE';
-  String basicAuth = 'Basic ' + base64.encode(utf8.encode('$username:$password'));
+  String basicAuth = 'Basic ${base64.encode(utf8.encode('$username:$password'))}';
   var url ='http://cbbalaguer.cat/wp-json/wp/v2/users/$idUser';
   const JsonCodec json = JsonCodec();
-  var body2 = null;
+  var body2;
   final response = await http.Client().get(Uri.parse(url),
       headers: {"Accept": "application/json", "authorization": basicAuth}
       ).then((http.Response response) {
-    print("Home: Response status: ${response.statusCode}");
-    print("Home: Response body: ${response.body}");
-    print(response.headers);
-    print(response.request);
     body2 = json.decode(response.body.toString());
   });
-  print(body2["nom"]);
   return body2;
 }

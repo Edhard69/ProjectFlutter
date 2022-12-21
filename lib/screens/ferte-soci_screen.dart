@@ -80,8 +80,32 @@ class _PaginaFerteSociState extends State<PaginaFerteSoci> {
                 ),
               ),
               title: const Text('Fer-te Soci'),
-              onTap: () {
-                Navigator.pushNamed(context, '/paginaFerteSoci');
+              onTap: () async {
+                takeId().then(
+                        (value) => {
+                      if(value == null){
+                        Navigator.pushNamed(context, '/paginaFerteSoci')
+                      }else{
+                        consulta(value).then(
+                                (value2) => {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        CarnetSociScreen(
+                                            value2["nom"],
+                                            value2["cognom"],
+                                            value2["correu"],
+                                            value2["id"]
+                                        )
+                                ),
+                              ),
+                            }
+                        ),
+                      }
+                    }
+
+                );
               },
             ),
             ListTile(
@@ -604,7 +628,7 @@ Future<String> enviarEmail(String email, String nom, String cognoms) async {
 Future<dynamic> registrarse(String nomUser, String cognomsUser, String telefonUser, String correuUser, String contrasenyaUser, int preuUser, String ibanUser) async {
   String username = 'app';
   String password = 'pdB9z)fD!KL&5Xzs*@AX3!rE';
-  String basicAuth = 'Basic ' + base64.encode(utf8.encode('$username:$password'));
+  String basicAuth = 'Basic ${base64.encode(utf8.encode('$username:$password'))}';
   var url ='http://cbbalaguer.cat/wp-json/wp/v2/users/register';
   const JsonCodec json = JsonCodec();
   var body2 = null;
@@ -619,13 +643,19 @@ Future<dynamic> registrarse(String nomUser, String cognomsUser, String telefonUs
   return body2["message"];
 }
 
+Future<int?> takeId() async {
+  final prefs = await SharedPreferences.getInstance();
+  final int? idUser = prefs.getInt('idUser');
+  return idUser;
+}
+
 Future<dynamic> consulta(int idUser) async {
   String username = 'app';
   String password = 'pdB9z)fD!KL&5Xzs*@AX3!rE';
-  String basicAuth = 'Basic ' + base64.encode(utf8.encode('$username:$password'));
+  String basicAuth = 'Basic ${base64.encode(utf8.encode('$username:$password'))}';
   var url ='http://cbbalaguer.cat/wp-json/wp/v2/users/$idUser';
   const JsonCodec json = JsonCodec();
-  var body2 = null;
+  var body2;
   final response = await http.Client().get(Uri.parse(url),
       headers: {"Accept": "application/json", "authorization": basicAuth}
   ).then((http.Response response) {
