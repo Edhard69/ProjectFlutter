@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:project1/screens/carnet-soci-screen.dart';
 import 'dart:convert';
@@ -12,6 +14,17 @@ class PaginaNotificacions extends StatefulWidget {
 class _PaginaNotificacionsState extends State<PaginaNotificacions> {
 
   static const colorPpal = Colors.red;
+  late dynamic notificacionsRes = [];
+
+  //init
+  @override
+  initState(){
+    super.initState();
+    notificacions().then((value) => setState(() {
+      this.notificacionsRes = value;
+      print(value);
+    }));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +43,19 @@ class _PaginaNotificacionsState extends State<PaginaNotificacions> {
         ],
       ),
       body: PageView(
-        children: const [
-          CustomScreen( color: Colors.white ),
+        //imprimir un lista con las notificaciones
+        children: [
+          ListView.builder(
+            itemCount: notificacionsRes.length,
+            itemBuilder: (context, index) {
+              return Card(
+                child: ListTile(
+                  title: Text(notificacionsRes[index]['titol']),
+                  subtitle: Text(notificacionsRes[index]['missatge']),
+                ),
+              );
+            },
+          ),
         ],
       ),
       drawer: Drawer(
@@ -127,39 +151,21 @@ class _PaginaNotificacionsState extends State<PaginaNotificacions> {
                 Navigator.pushNamed(context, '/paginaNoticies');
               },
             ),
-            Container(
-              margin: EdgeInsets.only(top: 270),
-              child: InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, '/');
-                },
-                child: Column(
-                  children: const <Widget>[
-                    Icon(
-                      Icons.home,
-                      size: 40.0,
-                      color: colorPpal,
-                    ),
-                  ],
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, '/');
+              },
+              child: Container(
+                margin: const EdgeInsets.only(top: 20),
+                child: const Icon(
+                  Icons.home,
+                  size: 40.0,
+                  color: colorPpal,
                 ),
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class CustomScreen extends StatelessWidget {
-  final Color color;
-  const CustomScreen({super.key,  required this.color });
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Notificacions'),
       ),
     );
   }
@@ -176,6 +182,21 @@ Future<dynamic> consulta(int idUser) async {
   String password = 'pdB9z)fD!KL&5Xzs*@AX3!rE';
   String basicAuth = 'Basic ${base64.encode(utf8.encode('$username:$password'))}';
   var url ='http://cbbalaguer.cat/wp-json/wp/v2/users/$idUser';
+  const JsonCodec json = JsonCodec();
+  var body2;
+  final response = await http.Client().get(Uri.parse(url),
+      headers: {"Accept": "application/json", "authorization": basicAuth}
+  ).then((http.Response response) {
+    body2 = json.decode(response.body.toString());
+  });
+  return body2;
+}
+
+Future<dynamic> notificacions() async {
+  String username = 'app';
+  String password = 'pdB9z)fD!KL&5Xzs*@AX3!rE';
+  String basicAuth = 'Basic ${base64.encode(utf8.encode('$username:$password'))}';
+  var url ='http://cbbalaguer.cat/wp-json/wp/v2/notifications';
   const JsonCodec json = JsonCodec();
   var body2;
   final response = await http.Client().get(Uri.parse(url),

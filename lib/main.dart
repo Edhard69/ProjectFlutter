@@ -9,12 +9,17 @@ import 'package:project1/screens/resultats_screen.dart';
 import 'package:project1/screens/descomptes-i-serveis_screen.dart';
 import 'package:project1/screens/noticies_screen.dart';
 import 'package:project1/screens/login_screen.dart';
+
+import 'onesignal.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    oneSignalInitialize();
+
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'CB Balaguer',

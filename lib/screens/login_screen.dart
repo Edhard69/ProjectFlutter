@@ -163,14 +163,13 @@ class _PaginaLoginState extends State<PaginaLogin> {
               onTap: () {
                 Navigator.pushNamed(context, '/');
               },
-              child: Column(
-                children: const <Widget>[
-                  Icon(
-                    Icons.home,
-                    size: 40.0,
-                    color: colorPpal,
-                  ),
-                ],
+              child: Container(
+                margin: const EdgeInsets.only(top: 20),
+                child: const Icon(
+                  Icons.home,
+                  size: 40.0,
+                  color: colorPpal,
+                ),
               ),
             ),
           ],
@@ -334,7 +333,7 @@ Future<dynamic> login(String emailUser, String passwordUser) async {
       body: body).then((http.Response response) async {
     body2 = json.decode(response.body.toString());
     final prefs = await SharedPreferences.getInstance();
-    if(body2["code"]==200 || body2["code"]=="200"){
+    if(body2["code"]==200){
       prefs.setInt('idUser',body2["message"]);
     }
   });

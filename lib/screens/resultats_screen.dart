@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:project1/screens/carnet-soci-screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class PaginaResultats extends StatefulWidget {
   @override
@@ -126,20 +127,16 @@ class _PaginaResultatsState extends State<PaginaResultats> {
                 Navigator.pushNamed(context, '/paginaNoticies');
               },
             ),
-            Container(
-              margin: EdgeInsets.only(top: 270),
-              child: InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, '/');
-                },
-                child: Column(
-                  children: const <Widget>[
-                    Icon(
-                      Icons.home,
-                      size: 40.0,
-                      color: colorPpal,
-                    ),
-                  ],
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, '/');
+              },
+              child: Container(
+                margin: const EdgeInsets.only(top: 20),
+                child: const Icon(
+                  Icons.home,
+                  size: 40.0,
+                  color: colorPpal,
                 ),
               ),
             ),
@@ -158,8 +155,9 @@ class CustomScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(
-        child: Text('Resultats'),
+      body: WebView(
+        zoomEnabled: false,
+        initialUrl: 'https://cbbalaguer.cat/resultats/',
       ),
     );
   }

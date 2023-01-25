@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CarnetSociScreen extends StatelessWidget {
@@ -8,11 +10,13 @@ class CarnetSociScreen extends StatelessWidget {
   final int id;
   const CarnetSociScreen(this.nom, this.cognoms, this.correu, this.id, {super.key});
 
+
   static const ampladaEsquerra = Padding(
-    padding: EdgeInsets.only(left: 70.0),
+    padding: EdgeInsets.only(left: 20.0),
   );
+  static const colorPpal = Colors.red;
   static const midaCamps1 = 70.0;
-  static const midaCamps2 = 150.0;
+  static const midaCamps2 = 200.0;
   static const midaLletra = 14.0;
   static const colorLletra = Colors.white;
   static const espaiLletres = 0.5;
@@ -53,12 +57,11 @@ class CarnetSociScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-
                     Container(
                       height: 250,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage('lib/image/soci-club-basquet.png'),
+                          image: AssetImage('assets/image/soci-club-basquet.png'),
                         ),
                       ),
                       child: Column(
@@ -66,7 +69,7 @@ class CarnetSociScreen extends StatelessWidget {
                             Column(
                                 children: <Widget>[
                                   const SizedBox(
-                                    height: 150.0,
+                                    height: 148.0,
                                   ),
                                   Row(
                                       mainAxisSize: MainAxisSize.max,
@@ -185,4 +188,25 @@ class CarnetSociScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<int?> takeId() async {
+  final prefs = await SharedPreferences.getInstance();
+  final int? idUser = prefs.getInt('idUser');
+  return idUser;
+}
+
+Future<dynamic> consulta(int idUser) async {
+  String username = 'app';
+  String password = 'pdB9z)fD!KL&5Xzs*@AX3!rE';
+  String basicAuth = 'Basic ${base64.encode(utf8.encode('$username:$password'))}';
+  var url ='http://cbbalaguer.cat/wp-json/wp/v2/users/$idUser';
+  const JsonCodec json = JsonCodec();
+  var body2;
+  final response = await http.Client().get(Uri.parse(url),
+      headers: {"Accept": "application/json", "authorization": basicAuth}
+  ).then((http.Response response) {
+    body2 = json.decode(response.body.toString());
+  });
+  return body2;
 }

@@ -21,15 +21,11 @@ class _PaginaPpalState extends State<PaginaPpal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Inici"),
-          centerTitle: true,
-        ),
-      body: PageView(
-        children: const [
-          CustomScreen( color: Colors.red ),
-        ],
+      appBar: AppBar(
+        title: const Text("Inici"),
+        centerTitle: true,
       ),
+      body: CustomScreen( color: Colors.red ),
       bottomNavigationBar: BottomAppBar(
         child: SizedBox(
           height: 240,
@@ -348,7 +344,6 @@ class _PaginaPpalState extends State<PaginaPpal> {
           ),
         ),
       ),
-
       drawer: Drawer(
         child: ListView(
           children: [
@@ -394,7 +389,6 @@ class _PaginaPpalState extends State<PaginaPpal> {
                         ),
                       }
                     }
-
                 );
               },
             ),
@@ -456,83 +450,78 @@ class CustomScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: Column(
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    return Scaffold(
+      body: Column(
           children: <Widget>[
             Container(
-              height: 160.0,
-              margin: const EdgeInsets.only(top: 90.0, left: 20.0, right: 20.0),
+              height: height * 0.2,
+              width: width * 0.9,
+              margin: const EdgeInsets.only(top: 80.0, left: 20.0, right: 20.0),
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('lib/image/logocbbalaguer.png'),
-                  scale: 1,
+                  image: AssetImage('assets/image/logocbbalaguer-sensefons.png'),
                 ),
               ),
             ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              height: 0,
-              child: Container(
-                height: 40,
-                alignment: Alignment.centerRight,
-                padding: const EdgeInsets.only(right: 30.0),
-                child: FloatingActionButton.extended(
-                  onPressed: () async {
-                    takeId().then(
-                            (value) => {
-                          if(value == null){
-                            Navigator.pushNamed(context, '/paginaFerteSoci')
-                          }else{
-                            consulta(value).then(
-                                    (value2) => {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            CarnetSociScreen(
-                                                value2["nom"],
-                                                value2["cognom"],
-                                                value2["correu"],
-                                                value2["id"]
-                                            )
-                                    ),
+            Container(
+              height: 40,
+              width: width,
+              alignment: Alignment.centerRight,
+              margin: const EdgeInsets.only(right: 40.0, top: 7.0),
+              child: FloatingActionButton.extended(
+                onPressed: () async {
+                  takeId().then(
+                          (value) => {
+                        if(value == null){
+                          Navigator.pushNamed(context, '/paginaFerteSoci')
+                        }else{
+                          consulta(value).then(
+                                  (value2) => {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          CarnetSociScreen(
+                                              value2["nom"],
+                                              value2["cognom"],
+                                              value2["correu"],
+                                              value2["id"]
+                                          )
                                   ),
-                                }
-                            ),
-                          }
+                                ),
+                              }
+                          ),
                         }
-
-                    );
-                  },
-                  label: const Text(
-                    "FES-TE SOCI!",
-                    style: TextStyle(fontSize: 18,fontWeight: FontWeight.w900),
-                  ),
-                  backgroundColor: Colors.red[900],
+                      }
+                  );
+                },
+                label: const Text(
+                  "FES-TE SOCI!",
+                  style: TextStyle(fontSize: 18,fontWeight: FontWeight.w900),
                 ),
+                backgroundColor: Colors.red[900],
               ),
             ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              height: 60,
-              child: Container(
-                  alignment: Alignment.centerRight,
-                  padding: const EdgeInsets.only(right: 35.0, top: 5.0),
-                  child: Column(
-                      children: const [
-                        Text(
-                          "TEMPORADA 2022/2023",
-                          style: TextStyle(fontWeight: FontWeight.w900),
-                        ),
-                      ]
-                  )
-              ),
+            Container(
+                width: width,
+                alignment: Alignment.centerRight,
+                margin: const EdgeInsets.only(right: 54.0, top: 5.0),
+                child: Column(
+                  children: const [
+                    Text(
+                      "TEMPORADA 2022/2023",
+                      style: TextStyle(fontSize: 12,fontWeight: FontWeight.w900),
+                    ),
+                  ]
+                )
             ),
           ],
         ),
     );
+
   }
 }
 

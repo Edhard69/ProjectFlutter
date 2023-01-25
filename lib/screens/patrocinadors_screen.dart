@@ -22,7 +22,7 @@ class _PaginaPatrocinadorsState extends State<PaginaPatrocinadors> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: new Icon(Icons.home),
+            icon: const Icon(Icons.home),
             iconSize: 30,
             onPressed: () {
                 Navigator.pushNamed(context, '/');
@@ -128,20 +128,16 @@ class _PaginaPatrocinadorsState extends State<PaginaPatrocinadors> {
                 Navigator.pushNamed(context, '/paginaNoticies');
               },
             ),
-            Container(
-              margin: EdgeInsets.only(top: 270),
-              child: InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, '/');
-                },
-                child: Column(
-                  children: const <Widget>[
-                    Icon(
-                      Icons.home,
-                      size: 40.0,
-                      color: colorPpal,
-                    ),
-                  ],
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, '/');
+              },
+              child: Container(
+                margin: const EdgeInsets.only(top: 20),
+                child: const Icon(
+                  Icons.home,
+                  size: 40.0,
+                  color: colorPpal,
                 ),
               ),
             ),

@@ -172,14 +172,13 @@ class _PaginaFerteSociState extends State<PaginaFerteSoci> {
               onTap: () {
                 Navigator.pushNamed(context, '/');
               },
-              child: Column(
-                children: const <Widget>[
-                  Icon(
-                    Icons.home,
-                    size: 40.0,
-                    color: colorPpal,
-                  ),
-                ],
+              child: Container(
+                margin: const EdgeInsets.only(top: 20),
+                child: const Icon(
+                  Icons.home,
+                  size: 40.0,
+                  color: colorPpal,
+                ),
               ),
             ),
           ],
@@ -462,7 +461,7 @@ class _PaginaFerteSociState extends State<PaginaFerteSoci> {
                             size: const Size(190, 80),
                             child: RadioListTile<String>(
                               title: const Text('Altra quantitat'),
-                              value: '5',
+                              value: '10',
                               groupValue: money,
                               onChanged: (value) {
                                 setState(() {
@@ -488,6 +487,9 @@ class _PaginaFerteSociState extends State<PaginaFerteSoci> {
                                   }else{
                                     try{
                                       preu = int.parse(quantitatController.text);
+                                      if(preu<10){
+                                        return "Minim 10€";
+                                      }
                                     }catch (e){
                                       return "Incorrecte";
                                     }
@@ -540,7 +542,7 @@ class _PaginaFerteSociState extends State<PaginaFerteSoci> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 10),
+              padding: const EdgeInsets.only(right: 10),
               child: ElevatedButton(
                 child: const Text("Registrar-se"),
                 onPressed: (){
@@ -577,7 +579,7 @@ class _PaginaFerteSociState extends State<PaginaFerteSoci> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 10),
+              padding: const EdgeInsets.only(left: 10),
               child: ElevatedButton(
                   child: const Text("Ja estic registrat"),
                   onPressed: (){
