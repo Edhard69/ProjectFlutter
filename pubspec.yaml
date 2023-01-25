@@ -43,6 +43,7 @@ dependencies:
   shared_preferences: ^2.0.15
   flutter_html: ^0.11.1
   flutter_launcher_icons: ^0.11.0
+  onesignal_flutter: ^3.5.0
 
 dev_dependencies:
   flutter_test:
@@ -74,7 +75,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-     - lib/image/
+    - assets/image/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
