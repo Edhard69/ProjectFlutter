@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     oneSignalInitialize();
 
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: true,
         title: 'CB Balaguer',
         theme: ThemeData(
           primarySwatch: Colors.red,

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 import 'package:project1/screens/carnet-soci-screen.dart';
@@ -461,7 +462,7 @@ class _PaginaFerteSociState extends State<PaginaFerteSoci> {
                             size: const Size(190, 80),
                             child: RadioListTile<String>(
                               title: const Text('Altra quantitat'),
-                              value: '10',
+                              value: '25',
                               groupValue: money,
                               onChanged: (value) {
                                 setState(() {
@@ -487,8 +488,8 @@ class _PaginaFerteSociState extends State<PaginaFerteSoci> {
                                   }else{
                                     try{
                                       preu = int.parse(quantitatController.text);
-                                      if(preu<10){
-                                        return "Minim 10€";
+                                      if(preu<20){
+                                        return "Minim 20€";
                                       }
                                     }catch (e){
                                       return "Incorrecte";
@@ -545,9 +546,11 @@ class _PaginaFerteSociState extends State<PaginaFerteSoci> {
               padding: const EdgeInsets.only(right: 10),
               child: ElevatedButton(
                 child: const Text("Registrar-se"),
-                onPressed: (){
+                onPressed: () async {
+                  var prefs = await SharedPreferences.getInstance();
                   if(keyForm.currentState!.validate()){
-                    enviarEmail(correuController.text, nomController.text, cognomsController.text);
+                    //enviarEmail(correuController.text, nomController.text, cognomsController.text);
+                    String msg;
                     registrarse(
                         nomController.text,
                         cognomsController.text,
@@ -557,22 +560,32 @@ class _PaginaFerteSociState extends State<PaginaFerteSoci> {
                         preu,
                         ibanController.text
                     ).then((value) => {
-                      consulta(value).then(
-                              (value2) => {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      CarnetSociScreen(
-                                          value2["nom"],
-                                          value2["cognom"],
-                                          value2["correu"],
-                                          value2["id"]
-                                      )
+                      if(prefs.getInt("idUser")!=null){
+                        enviarEmail(correuController.text, nomController.text, cognomsController.text),
+                        consulta(value).then(
+                                (value2) =>
+                            {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        CarnetSociScreen(
+                                            value2["nom"],
+                                            value2["cognom"],
+                                            value2["correu"],
+                                            value2["id"]
+                                        )
+                                ),
                               ),
-                            ),
-                          }
-                      ),
+                            }
+                        ),
+                      }else{
+                        msg = value,
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => _buildPopupDialog(context,msg),
+                        ),
+                      }
                     });
                   }
                 },
@@ -599,6 +612,28 @@ class AlwaysDisabledFocusNode extends FocusNode {
   bool get hasFocus => false;
 }
 
+Widget _buildPopupDialog(BuildContext context,msg) {
+  return AlertDialog(
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Html(
+            data: msg
+        ),
+      ],
+    ),
+    actions: <Widget>[
+      ElevatedButton(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        child: const Text('Tancar'),
+      ),
+    ],
+  );
+}
+
 Future<String> enviarEmail(String email, String nom, String cognoms) async {
   final smtpServer = SmtpServer(
     "mail.compsaonline.com",
@@ -613,6 +648,8 @@ Future<String> enviarEmail(String email, String nom, String cognoms) async {
   final message = Message()
     ..from = const Address("web2@compsaonline.com", "web2@compsaonline.com")
     ..recipients.add(email)
+    ..recipients.add('info@cbbalaguer.com')
+    ..recipients.add('jaumeroiges@hotmail.com')
     ..subject = 'Nou registre CB Balaguer'
     ..text = "Gracies per registrarte a la aplicació de CB Balaguer $cognoms, $nom";
   try {
@@ -639,8 +676,10 @@ Future<dynamic> registrarse(String nomUser, String cognomsUser, String telefonUs
       headers: {"Accept": "application/json", "authorization": basicAuth, "Content-Type": "application/json"},
       body: body).then((http.Response response) async {
     body2 = json.decode(response.body.toString());
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setInt('idUser',body2["message"]);
+    if(body2["code"]==200){
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setInt('idUser',body2["message"]);
+    }
   });
   return body2["message"];
 }

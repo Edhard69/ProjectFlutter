@@ -25,7 +25,7 @@ class _PaginaPpalState extends State<PaginaPpal> {
         title: const Text("Inici"),
         centerTitle: true,
       ),
-      body: CustomScreen( color: Colors.red ),
+      body: const CustomScreen( color: Colors.red ),
       bottomNavigationBar: BottomAppBar(
         child: SizedBox(
           height: 240,
